@@ -1,8 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-public class ReadFile{
-  public static void main(String[] args){
+public class Maze{
+  public static void main(String[] args) throws FileNotFoundException{
     File text = new File(args[0]);
     Scanner s = new Scanner(text);
     while(s.hasNextLine()){
