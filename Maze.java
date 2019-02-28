@@ -29,31 +29,48 @@ public class Maze{
     for(int i = 0; i < maze.length; i++){
       for(int j = 0; j< maze[0].length; j++){
         if(maze[i][j] == 'S') S+=1;
-        if(maze[i][j] == 'J') J+=1;
-        if(S > 1 || J > 1) return false;
+        if(maze[i][j] == 'E') E+=1;
+        if(S > 1 || E > 1) return false;
       }
-    } return(S==1 && J ==1);
+    } return(S==1 && E ==1);
   }
-  
-  public static toString()
+
+  private int[] initiateMaze(String filename)  throws FileNotFoundException{
+    File text = new File(filename);
+    Scanner s = new Scanner(text);
+    int lines = 0;
+    int chars = 0;
+    while(s.hasNextLine()){
+      for(int i = 0; i < s.nextLine().length(); i++){
+        chars+=1;
+      }
+      lines +=1;
+    }
+    int[] j =  {lines, chars/lines};
+    return j;
+  }
+
+
 
   public Maze(String filename) throws FileNotFoundException, IllegalStateException{
     animate = false;
+    int[] findSize = initiateMaze(filename);
+    maze = new char[findSize[0]][findSize[1]];
     File text = new File(filename);
     Scanner s = new Scanner(text);
     int lines = 0;
     while(s.hasNextLine()){
-      for(int i = 0; i < s.nextLine.length(); i++){
-        maze[lines][i]  = s.chatAt(i);
+      for(int i = 0; i < s.nextLine().length(); i++){
+        maze[lines][i]  = s.nextLine().charAt(i);
       }
 
-      lines + 1
+      lines += 1;
     }
 
   }
 
-  public static main(String[] args){
-    Maze m = new Maze(Maze1.txt);
+  public static void main(String[] args) throws FileNotFoundException{
+    Maze m = new Maze("Maze1.txt");
   }
 
 
@@ -90,7 +107,7 @@ public class Maze{
 
   */
   public int solve(){
-
+      return 1;
     //find the location of the S.
 
 
