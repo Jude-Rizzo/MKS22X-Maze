@@ -138,18 +138,18 @@ maze[row][col] = '@';
 //var for location of where to move next
 int RowTo;
 int ColTo;
-int next;
+int move;
 //loop through each direction
-for (int i = 0; i < direction.lengt; i+=2){
-  RowTo = row + direction[i]
+for (int i = 0; i < direction.length; i+=2){
+  RowTo = row + direction[i];
   ColTo = col + direction[i+1];
   if (maze[RowTo][ColTo] == ' '){
-    next = solve(RowTo,ColTo);
-    //only happens if the end has been reached
-    if (next != -1) return next;
+    move = solve(RowTo,ColTo);
+    //activates if blank
+    if (move != -1) return move;
   }
   else if (maze[RowTo][ColTo] == 'E'){
-    return 1
+    return 1;
   }
 }
 //mark the place you been to with a period
