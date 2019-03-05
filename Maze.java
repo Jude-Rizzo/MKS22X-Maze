@@ -126,19 +126,38 @@ public class Maze{
   All visited spots that are part of the solution are changed to '@'
   */
   private int solve(int row, int col){ //you can add more parameters since this is private
-
     //automatic animation! You are welcome.
     if(animate){
-
       clearTerminal();
       System.out.println(this);
 
       wait(20);
     }
+    //mark the place you are with @
+maze[row][col] = '@';
+//var for location of where to move next
+int RowTo;
+int ColTo;
+int next;
+//loop through each direction
+for (int i = 0; i < direction.lengt; i+=2){
+  RowTo = row + direction[i]
+  ColTo = col + direction[i+1];
+  if (maze[RowTo][ColTo] == ' '){
+    next = solve(RowTo,ColTo);
+    //only happens if the end has been reached
+    if (next != -1) return next;
+  }
+  else if (maze[RowTo][ColTo] == 'E'){
+    return 1
+  }
+}
+//mark the place you been to with a period
+maze[row][col] = '.';
 
     //COMPLETE SOLVE
 
-    return -1; //so it compiles
+    return -1;
   }
 
 
