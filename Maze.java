@@ -53,6 +53,16 @@ public class Maze{
     if (start > 1 || end > 1) throw new IllegalStateException("Too many STARTS OR ENDS");
     if (start == 0 || end == 0) throw new IllegalStateException("Please make sure there is a start and end point");
   }
+  public String toString(){
+    String output = "";
+    for (int r = 0; r < maze.length; r++){
+      for (int c = 0; c < maze[r].length; c++){
+        output += maze[r][c];
+      }
+      output += "\n";
+    }
+  }
+  return output;
 
   public static void main(String[] args) throws FileNotFoundException{
     Maze m = new Maze("Maze1.txt");
