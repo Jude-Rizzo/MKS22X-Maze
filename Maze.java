@@ -80,16 +80,12 @@ public class Maze{
 
 
   public void setAnimate(boolean b){
-
     animate = b;
-
   }
 
 
   public void clearTerminal(){
-
-    //erase terminal, go to top left of screen.
-
+    //erase terminal, go to top left of screen
     System.out.println("\033[2J\033[1;1H");
 
   }
@@ -103,15 +99,11 @@ public class Maze{
 
   */
   public int solve(){
-    return 1;
+    return solveH(r, c);
+    //
     //find the location of the S.
-
-
     //erase the S
-
-
     //and start solving at the location of the s.
-
     //return solve(???,???);
 
   }
@@ -134,7 +126,6 @@ public class Maze{
   All visited spots that are part of the solution are changed to '@'
   */
   private int solve(int row, int col){ //you can add more parameters since this is private
-
 
     //automatic animation! You are welcome.
     if(animate){
