@@ -31,16 +31,16 @@ public class Maze{
       row++;
       col = str.length();
     }
-    fixScanner(filename);
+    fixScanner(filename, start, end, row, col, f);
   }
 
-private void fixScanner(filename) throws IllegalStateException, IllegalArgumentException{
-file = new Scanner(f);
-maze = new char[rows][cols];
+private void fixScanner(String filename, int start, int end, int row, int col, File f) throws FileNotFoundException{
+Scanner file = new Scanner(f);
+char[][] m = new char[row][col];
 
-for(int i = 0; i < rows; i++){
+for(int i = 0; i < row; i++){
   String line = file.nextLine();
-  for (int j = 0; j < cols; j++){
+  for (int j = 0; j < col; j++){
     char c = line.charAt(j);
     if (c == 'S'){
       start++;
@@ -52,10 +52,10 @@ for(int i = 0; i < rows; i++){
       endRow = i;
       endCol = j;
     }
-    maze[i][j] = c;
+    m[i][j] = c;
   }
 }
-if (start > 1 || end > 1) throw new IllegalStateException("There can only be 1 starting point or ending point");
+if (start > 1 || end > 1) throw new IllegalStateException("Too many STARTS OR ENDS");
 if (start == 0 || end == 0) throw new IllegalStateException("Please make sure there is a start and end point");
 }
 
