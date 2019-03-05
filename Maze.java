@@ -20,16 +20,16 @@ public class Maze{
   public Maze(String filename) throws FileNotFoundException{
     animate = false;
     File f = new File(filename);
-    Scanner file = new Scanner(f);
+    Scanner s = new Scanner(f);
     int row = 0;
     int col = 0;
     int start = 0;
     int end = 0;
     //get dimensions and copy into the next file for easier access
-    while (file.hasNextLine()){
-      String s = file.nextLine();
+    while (s.hasNextLine()){
+      String str = s.nextLine();
       row++;
-      col = s.length();
+      col = str.length();
     }
   }
 
