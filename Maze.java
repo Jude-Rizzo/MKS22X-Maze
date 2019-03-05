@@ -31,119 +31,113 @@ public class Maze{
       row++;
       col = str.length();
     }
-    fixScanner(filename, start, end, row, col, f);
+    s = new Scanner(f);
+    char[][] m = new char[row][col];
+    for(int i = 0; i < row; i++){
+      String line = s.nextLine();
+      for (int j = 0; j < col; j++){
+        char c = line.charAt(j);
+        if (c == 'S'){
+          start++;
+          startRow = i;
+          startCol = j;
+        }
+        if (c == 'E'){
+          end++;
+          endRow = i;
+          endCol = j;
+        }
+        m[i][j] = c;
+      }
+    }
+    if (start > 1 || end > 1) throw new IllegalStateException("Too many STARTS OR ENDS");
+    if (start == 0 || end == 0) throw new IllegalStateException("Please make sure there is a start and end point");
   }
 
-private void fixScanner(String filename, int start, int end, int row, int col, File f) throws FileNotFoundException{
-Scanner file = new Scanner(f);
-char[][] m = new char[row][col];
-
-for(int i = 0; i < row; i++){
-  String line = file.nextLine();
-  for (int j = 0; j < col; j++){
-    char c = line.charAt(j);
-    if (c == 'S'){
-      start++;
-      startRow = i;
-      startCol = j;
-    }
-    if (c == 'E'){
-      end++;
-      endRow = i;
-      endCol = j;
-    }
-    m[i][j] = c;
+  public static void main(String[] args) throws FileNotFoundException{
+    Maze m = new Maze("Maze1.txt");
   }
+
+
+  private void wait(int millis){
+    try {
+      Thread.sleep(millis);
+    }
+    catch (InterruptedException e) {
+    }
+  }
+
+
+  public void setAnimate(boolean b){
+
+    animate = b;
+
+  }
+
+
+  public void clearTerminal(){
+
+    //erase terminal, go to top left of screen.
+
+    System.out.println("\033[2J\033[1;1H");
+
+  }
+
+
+
+  /*Wrapper Solve Function returns the helper function
+
+  Note the helper function has the same name, but different parameters.
+  Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
+
+  */
+  public int solve(){
+    return 1;
+    //find the location of the S.
+
+
+    //erase the S
+
+
+    //and start solving at the location of the s.
+
+    //return solve(???,???);
+
+  }
+
+  /*
+  Recursive Solve function:
+
+  A solved maze has a path marked with '@' from S to E.
+
+  Returns the number of @ symbols from S to E when the maze is solved,
+  Returns -1 when the maze has no solution.
+
+
+  Postcondition:
+
+  The S is replaced with '@' but the 'E' is not.
+
+  All visited spots that were not part of the solution are changed to '.'
+
+  All visited spots that are part of the solution are changed to '@'
+  */
+  private int solve(int row, int col){ //you can add more parameters since this is private
+
+
+    //automatic animation! You are welcome.
+    if(animate){
+
+      clearTerminal();
+      System.out.println(this);
+
+      wait(20);
+    }
+
+    //COMPLETE SOLVE
+
+    return -1; //so it compiles
+  }
+
+
 }
-if (start > 1 || end > 1) throw new IllegalStateException("Too many STARTS OR ENDS");
-if (start == 0 || end == 0) throw new IllegalStateException("Please make sure there is a start and end point");
-}
-
-
-    public static void main(String[] args) throws FileNotFoundException{
-      Maze m = new Maze("Maze1.txt");
-    }
-
-
-    private void wait(int millis){
-      try {
-        Thread.sleep(millis);
-      }
-      catch (InterruptedException e) {
-      }
-    }
-
-
-    public void setAnimate(boolean b){
-
-      animate = b;
-
-    }
-
-
-    public void clearTerminal(){
-
-      //erase terminal, go to top left of screen.
-
-      System.out.println("\033[2J\033[1;1H");
-
-    }
-
-
-
-    /*Wrapper Solve Function returns the helper function
-
-    Note the helper function has the same name, but different parameters.
-    Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
-
-    */
-    public int solve(){
-      return 1;
-      //find the location of the S.
-
-
-      //erase the S
-
-
-      //and start solving at the location of the s.
-
-      //return solve(???,???);
-
-    }
-
-    /*
-    Recursive Solve function:
-
-    A solved maze has a path marked with '@' from S to E.
-
-    Returns the number of @ symbols from S to E when the maze is solved,
-    Returns -1 when the maze has no solution.
-
-
-    Postcondition:
-
-    The S is replaced with '@' but the 'E' is not.
-
-    All visited spots that were not part of the solution are changed to '.'
-
-    All visited spots that are part of the solution are changed to '@'
-    */
-    private int solve(int row, int col){ //you can add more parameters since this is private
-
-
-      //automatic animation! You are welcome.
-      if(animate){
-
-        clearTerminal();
-        System.out.println(this);
-
-        wait(20);
-      }
-
-      //COMPLETE SOLVE
-
-      return -1; //so it compiles
-    }
-
-
-  }
