@@ -31,7 +31,34 @@ public class Maze{
       row++;
       col = str.length();
     }
+    fixScanner(filename);
   }
+
+private void fixScanner(filename) throws IllegalStateException, IllegalArgumentException{
+file = new Scanner(f);
+maze = new char[rows][cols];
+
+for(int i = 0; i < rows; i++){
+  String line = file.nextLine();
+  for (int j = 0; j < cols; j++){
+    char c = line.charAt(j);
+    if (c == 'S'){
+      start++;
+      startRow = i;
+      startCol = j;
+    }
+    if (c == 'E'){
+      end++;
+      endRow = i;
+      endCol = j;
+    }
+    maze[i][j] = c;
+  }
+}
+if (start > 1 || end > 1) throw new IllegalStateException("There can only be 1 starting point or ending point");
+if (start == 0 || end == 0) throw new IllegalStateException("Please make sure there is a start and end point");
+}
+
 
     public static void main(String[] args) throws FileNotFoundException{
       Maze m = new Maze("Maze1.txt");
