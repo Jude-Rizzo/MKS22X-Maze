@@ -4,8 +4,8 @@ public class Maze{
 
 
   private char[][]maze;
+  private int[] moves = new int[]{0, 1, 0, -1, 1, 0, -1, 0};
   private boolean animate;//false by default
-  private int[] direction = new int[]{0, -1, 0, 1, 1, 0, -1, 0};
   private int startRow, startCol, endRow, endCol;
   /*Constructor loads a maze text file, and sets animate to false by default.
   1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -17,56 +17,62 @@ public class Maze{
   3. When the file is not found OR the file is invalid (not exactly 1 E and 1 S) then:
   throw a FileNotFoundException or IllegalStateException
   */
-  public Maze(String filename) throws FileNotFoundException{
-    animate = false;
-    File f = new File(filename);
-    Scanner s = new Scanner(f);
-    int row = 0;
-    int col = 0;
-    int start = 0;
-    int end = 0;
-    //get dimensions and copy into the next file for easier access
-    while (s.hasNextLine()){
-      String str = s.nextLine();
-      row++;
-      col = str.length();
-    }
-    s = new Scanner(f);
-    char[][] m = new char[row][col];
-    for(int i = 0; i < row; i++){
-      String line = s.nextLine();
-      for (int j = 0; j < col; j++){
-        char c = line.charAt(j);
-        if (c == 'S'){
-          start++;
-          startRow = i;
-          startCol = j;
-        }
-        if (c == 'E'){
-          end++;
-          endRow = i;
-          endCol = j;
-        }
-        m[i][j] = c;
-      }
-    }
-    if (start > 1 || end > 1) throw new IllegalStateException("Too many STARTS OR ENDS");
-    if (start == 0 || end == 0) throw new IllegalStateException("Please make sure there is a start and end point");
-  }
+  public Maze(String filename) throws FileNotFoundException {
+           File text = new File(filename);
+           Scanner s = new Scanner(text);
+           int row = 0;
+           int col = 0;
+           int scount = 0;
+           int ecount = 0;
+           while (s.hasNextLine()) {
+                   String line = s.nextLine();
+                   col = line.length();
+                   row++;
+           }
+
+           s = new Scanner(text);
+           maze = new char[row][col];
+           int countRow = 0;
+
+           while (s.hasNextLine()) {
+                   String line = s.nextLine();
+                   for (int i = 0; i < line.length(); i++) {
+                           maze[countRow][i] = line.charAt(i);
+                           if(line.charAt(i) == 'S'){
+                             startRow = countRow;
+                             startCol = i;
+                             scount ++;
+                           }
+                           if(line.charAt(i) == 'E'){
+                             endRow = countRow;
+                             endCol = i;
+                             ecount ++;
+                           }
+                   }
+                   countRow++;
+           }
+           animate = false;
+           if(scount !=1 || ecount != 1) throw new IllegalStateException();
+
+   }
+
 
   public String toString(){
     String ans = "";
     for (int r = 0; r < maze.length; r++){
       for (int c = 0; c < maze[r].length; c++){
-        output += maze[r][c];
+          ans += maze[r][c];
       }
       ans += "\n";
     }
+    return ans;
   }
-  return ans;
+
 
   public static void main(String[] args) throws FileNotFoundException{
     Maze m = new Maze("Maze1.txt");
+    m.solve();
+    System.out.println(m);
   }
 
 
@@ -99,7 +105,7 @@ public class Maze{
 
   */
   public int solve(){
-    return solveH(r, c);
+    return solveH(startRow, startCol);
     //
     //find the location of the S.
     //erase the S
@@ -125,7 +131,7 @@ public class Maze{
 
   All visited spots that are part of the solution are changed to '@'
   */
-  private int solve(int row, int col){ //you can add more parameters since this is private
+  private int solveH(int row, int col){ //you can add more parameters since this is private
     //automatic animation! You are welcome.
     if(animate){
       clearTerminal();
@@ -134,26 +140,27 @@ public class Maze{
       wait(20);
     }
     //mark the place you are with @
-maze[row][col] = '@';
-//var for location of where to move next
-int RowTo;
-int ColTo;
-int move;
-//loop through each direction
-for (int i = 0; i < direction.length; i+=2){
-  RowTo = row + direction[i];
-  ColTo = col + direction[i+1];
-  if (maze[RowTo][ColTo] == ' '){
-    move = solve(RowTo,ColTo);
-    //activates if blank
-    if (move != -1) return move;
+    maze[row][col] = '@';
+    //var for location of where to move next
+    int RowTo;
+    int ColTo;
+    int move;
+    //loop through each moves
+    for (int i = 0; i < moves.length; i+=2){
+      RowTo = row + moves[i];
+      ColTo = col + moves[i+1];
+      if (maze[RowTo][ColTo] == ' '){
+        move = solveH(RowTo,ColTo);
+        //activates if blank
+        if (move != -1) return move;
+      }
+      else if (maze[RowTo][ColTo] == 'E'){
+        return 1;
+
+    }
   }
-  else if (maze[RowTo][ColTo] == 'E'){
-    return 1;
-  }
-}
-//mark the place you been to with a period
-maze[row][col] = '.';
+    //mark the place you been to with a period
+    maze[row][col] = '.';
 
     //COMPLETE SOLVE
 
