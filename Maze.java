@@ -68,6 +68,25 @@ public class Maze{
     return ans;
   }
 
+  public void copyToArray(String m, int size, int length){
+    int r = 0;
+    int c = 0;
+    for(int i = 0; i < m.length(); i++){
+      if (r < size){
+        if (m.charAt(i) == '\n'){
+          r++;
+        }
+        if (c >= length){
+          c = 0;
+        }
+        else{
+          maze[r][c] = m.charAt(i);
+          c++;
+        }
+      }
+    }
+  }
+
 
   public static void main(String[] args) throws FileNotFoundException{
     Maze m = new Maze("Maze1.txt");
