@@ -124,12 +124,9 @@ public class Maze{
 
   */
   public int solve(){
-    return solveH(startRow, startCol);
-    //
-    //find the location of the S.
-    //erase the S
-    //and start solving at the location of the s.
-    //return solve(???,???);
+    maze[startRow][startCol] = ' ';
+      //start solving at the location of the s.
+      return solveH(startRow,startCol,0);
 
   }
 
@@ -155,26 +152,28 @@ public class Maze{
     if(animate){
       clearTerminal();
       System.out.println(this);
-
-      wait(20);
+      wait(10);
     }
-    //mark the place you are with @
-    maze[row][col] = '@';
-    //var for location of where to move next
-    int RowTo;
-    int ColTo;
-    int move;
-    //loop through each moves
-    for (int i = 0; i < moves.length; i+=2){
-      RowTo = row + moves[i];
-      ColTo = col + moves[i+1];
-      if (maze[RowTo][ColTo] == ' '){
-        move = solveH(RowTo,ColTo);
-        //activates if blank
-        if (move != -1) return move;
+    //if end is reached
+    if (maze[row][col] == 'E'){
+      return count;
+    }
+    //if the loc is not an empty spot
+    if (maze[row][col] != ' '){
+      return -1;
+    }
+    //loop through each direction
+    for (int i = 0; i < direction.length; i+=2){
+      //mark the place you are with @
+      maze[row][col] = '@';
+      int next = solve(row + direction[i],col + direction[i+1],count+1);
+      if (next != -1){
+        return next;
       }
-      else if (maze[RowTo][ColTo] == 'E'){
-        return 1;
+      //mark the place you been to with a period
+      maze[row][col] = '.';
+    }
+    return -1;
 
     }
   }
