@@ -58,14 +58,14 @@ public class Maze{
 
 
   public String toString(){
-    String ans = "";
+    String output = "";
     for (int r = 0; r < maze.length; r++){
       for (int c = 0; c < maze[r].length; c++){
-          ans += maze[r][c];
+        output += maze[r][c];
       }
-      ans += "\n";
+      output += "\n";
     }
-    return ans;
+    return output;
   }
 
   public void copyToArray(String m, int size, int length){
