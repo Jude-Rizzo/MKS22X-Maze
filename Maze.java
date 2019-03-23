@@ -125,65 +125,39 @@ public class Maze{
   */
   public int solve(){
     maze[startRow][startCol] = ' ';
-      //start solving at the location of the s.
-      return solveH(startRow,startCol,0);
+      return solve(startRow,startCol,0);
 
   }
 
-  /*
-  Recursive Solve function:
-
-  A solved maze has a path marked with '@' from S to E.
-
-  Returns the number of @ symbols from S to E when the maze is solved,
-  Returns -1 when the maze has no solution.
-
-
-  Postcondition:
-
-  The S is replaced with '@' but the 'E' is not.
-
-  All visited spots that were not part of the solution are changed to '.'
-
-  All visited spots that are part of the solution are changed to '@'
-  */
-  private int solveH(int row, int col){ //you can add more parameters since this is private
-    //automatic animation! You are welcome.
-    if(animate){
-      clearTerminal();
-      System.out.println(this);
-      wait(10);
-    }
-    //if end is reached
-    if (maze[row][col] == 'E'){
-      return count;
-    }
-    //if the loc is not an empty spot
-    if (maze[row][col] != ' '){
+  private int solve(int row, int col, int count){
+      //automatic animation! You are welcome.
+      if(animate){
+        clearTerminal();
+        System.out.println(this);
+        wait(10);
+      }
+      //if end is reached
+      if (maze[row][col] == 'E'){
+        return count;
+      }
+      //if the loc is not an empty spot
+      if (maze[row][col] != ' '){
+        return -1;
+      }
+      //loop through each moves
+      for (int i = 0; i < moves.length; i+=2){
+        //mark the place you are with @
+        maze[row][col] = '@';
+        int next = solve(row + moves[i],col + moves[i+1],count+1);
+        if (next != -1){
+          return next;
+        }
+        //mark the place you been to with a period
+        maze[row][col] = '.';
+      }
       return -1;
     }
-    //loop through each direction
-    for (int i = 0; i < direction.length; i+=2){
-      //mark the place you are with @
-      maze[row][col] = '@';
-      int next = solve(row + direction[i],col + direction[i+1],count+1);
-      if (next != -1){
-        return next;
-      }
-      //mark the place you been to with a period
-      maze[row][col] = '.';
-    }
-    return -1;
 
-    }
-  }
-    //mark the place you been to with a period
-    maze[row][col] = '.';
-
-    //COMPLETE SOLVE
-
-    return -1;
-  }
 
 
 }
